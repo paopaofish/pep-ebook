@@ -157,8 +157,11 @@ class Download(Chain):
                     
                     print(f"下载完成: 第 {i}/{item.pages} 页")
                     
-                    # Random delay to avoid rate limiting
-                    time.sleep(1 + random.randint(0, 2))
+                    # Simulate human reading time (log-normal distribution)
+                    # Most pages ~10-25s, occasional quick flips ~5s, slow pages ~40-60s
+                    delay = random.lognormvariate(2.5, 0.6)
+                    delay = max(5, min(delay, 65))
+                    time.sleep(delay)
                     
                 except Exception as e:
                     downloader.error = f"下载失败: {str(e)}"
